@@ -1,0 +1,50 @@
+import os
+import time
+import pyautogui
+from PIL import Image
+
+def capture_screen(area, save_path, count):
+    for i in range(count):
+        # Capture the screen
+        screenshot = pyautogui.screenshot(region=area)
+        
+        # Save as JPEG
+        jpeg_path = os.path.join(save_path, f'screenshot_{i+1}.jpeg')
+        screenshot.save(jpeg_path, 'JPEG')
+        
+        # Save as PNG
+        png_path = os.path.join(save_path, f'screenshot_{i+1}.png')
+        screenshot.save(png_path, 'PNG')
+        
+        # Save as PDF
+        pdf_path = os.path.join(save_path, f'screenshot_{i+1}.pdf')
+        screenshot.save(pdf_path, 'PDF')
+        
+        print(f'Screen {i+1} captured')
+        
+        # Wait for 10 seconds before capturing the next screen
+        time.sleep(10)
+
+def main():
+    # Ask the user for the number of screens to capture
+    count = int(input("How many screens to capture? "))
+    
+    # Define the directory path
+    dir_path = 'd/tmig'
+    
+    # Check if the directory exists
+    if os.path.exists(dir_path):
+        print("Directory available")
+    else:
+        os.makedirs(dir_path)
+        print("Directory created")
+    
+    # Define the area to capture (left, top, width, height)
+    # Adjust these values based on your specific area of the screen
+    area = (0, 0, 1920, 1080)  # Example for full HD screen
+    
+    # Capture the screen
+    capture_screen(area, dir_path, count)
+
+if __name__ == "__main__":
+    main()
